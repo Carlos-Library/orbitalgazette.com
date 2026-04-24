@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE ORBITAL GAZETTE — Space Power Electronics</title>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #f5eedc;
+    --paper-dark: #e8ddc4;
+    --paper-mid: #ede3c8;
+    --accent: #8b1a1a;
+    --rule: #2a1f0e;
+    --mast-bg: #1a1208;
+    --mast-text: #f5eedc;
+    --col-gap: 24px;
+    --fade-in-duration: 0.8s;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #c8b89a;
+    font-family: 'Libre Baskerville', Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(0,0,0,0.03) 28px, rgba(0,0,0,0.03) 29px);
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px;
+  }
+
+  .newspaper {
+    max-width: 1160px;
+    margin: 20px auto;
+    background: var(--paper);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(0,0,0,0.15);
+    position: relative;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--mast-bg);
+    color: var(--mast-text);
+    text-align: center;
+    padding: 28px 40px 20px;
+    border-bottom: 4px double var(--paper-dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.01) 3px,
+      rgba(255,255,255,0.01) 6px
+    );
+  }
+
+  .mast-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'IM Fell English', serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(245,238,220,0.15);
+    padding-bottom: 8px;
+  }
+
+  .paper-name {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: clamp(52px, 7vw, 86px);
+    color: var(--mast-text);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+    margin: 6px 0;
+  }
+
+  .mast-tagline {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin: 6px 0 14px;
+  }
+
+  .mast-rule {
+    border: none;
+    height: 1px;
+    background: rgba(245,238,220,0.25);
+    margin: 8px 0;
+  }
+
+  .mast-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'IM Fell English', serif;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    opacity: 0.65;
+    margin-top: 10px;
+  }
+
+  /* ── SECTION BANNER ── */
+  .section-banner {
+    background: var(--accent);
+    color: var(--paper);
+    text-align: center;
+    font-family: 'IM Fell English', serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 5px 0;
+  }
+
+  /* ── TICKER ── */
+  .ticker-wrap {
+    background: var(--ink);
+    color: var(--paper);
+    overflow: hidden;
+    padding: 5px 0;
+    font-family: 'IM Fell English', serif;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    border-top: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .ticker-inner {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 40s linear infinite;
+  }
+
+  .ticker-inner span {
+    padding: 0 48px;
+    opacity: 0.85;
+  }
+
+  .ticker-inner span::before {
+    content: '✦ ';
+    color: var(--accent);
+    opacity: 1;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main-content {
+    padding: 0 30px 40px;
+  }
+
+  /* ── FEATURED LEAD ── */
+  .lead-story {
+    border-bottom: 3px double var(--rule);
+    padding: 28px 0 22px;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 32px;
+    align-items: start;
+    opacity: 0;
+    animation: fadeUp var(--fade-in-duration) ease forwards;
+    animation-delay: 0.1s;
+  }
+
+  .lead-eyebrow {
+    font-family: 'IM Fell English', serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lead-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  .lead-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+
+  .lead-deck {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: #3a2e1e;
+    margin-bottom: 14px;
+    border-left: 3px solid var(--accent);
+    padding-left: 14px;
+  }
+
+  .lead-body {
+    font-size: 14px;
+    line-height: 1.72;
+    color: #2a1f0e;
+    column-count: 2;
+    column-gap: 24px;
+    column-rule: 1px solid var(--paper-dark);
+  }
+
+  .lead-sidebar {
+    border-left: 2px solid var(--rule);
+    padding-left: 22px;
+  }
+
+  .sidebar-label {
+    font-family: 'IM Fell English', serif;
+    font-size: 9.5px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--paper-dark);
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+  }
+
+  /* ── COLUMNS GRID ── */
+  .columns-section {
+    padding-top: 24px;
+  }
+
+  .section-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0 20px;
+  }
+
+  .section-rule-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--rule) 0%, transparent 100%);
+  }
+
+  .section-rule-line.right {
+    background: linear-gradient(90deg, transparent 0%, var(--rule) 100%);
+  }
+
+  .section-rule-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rule);
+    white-space: nowrap;
+    padding: 0 8px;
+    border-top: 2px solid var(--rule);
+    border-bottom: 2px solid var(--rule);
+    line-height: 2;
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .article-col {
+    padding: 0 20px;
+    border-right: 1px solid var(--paper-dark);
+    opacity: 0;
+    animation: fadeUp var(--fade-in-duration) ease forwards;
+  }
+
+  .article-col:first-child { padding-left: 0; }
+  .article-col:last-child  { padding-right: 0; border-right: none; }
+
+  .article-col:nth-child(1) { animation-delay: 0.2s; }
+  .article-col:nth-child(2) { animation-delay: 0.35s; }
+  .article-col:nth-child(3) { animation-delay: 0.5s; }
+
+  /* ── ARTICLE CARD ── */
+  .article-card {
+    cursor: pointer;
+    margin-bottom: 24px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--paper-dark);
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .article-card:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .article-card:hover .article-headline {
+    color: var(--accent);
+  }
+
+  .article-category {
+    font-family: 'IM Fell English', serif;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .article-category::before {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .article-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 8px;
+    transition: color 0.2s ease;
+  }
+
+  .article-summary {
+    font-size: 12.5px;
+    line-height: 1.68;
+    color: #3a2e1e;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-family: 'IM Fell English', serif;
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    color: #7a6a50;
+  }
+
+  .read-more {
+    color: var(--accent);
+    font-style: italic;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── STOCK BAR ── */
+  .stock-bar {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 30px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    border-top: 2px solid var(--accent);
+    flex-wrap: wrap;
+  }
+
+  .stock-bar-label {
+    font-family: 'IM Fell English', serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .stock-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .stock-ticker {
+    font-family: 'IM Fell English', serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    opacity: 0.6;
+  }
+
+  .stock-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .stock-change {
+    font-family: 'IM Fell English', serif;
+    font-size: 10px;
+    font-weight: bold;
+  }
+
+  .stock-up   { color: #5cba6a; }
+  .stock-down { color: #cc4444; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 10, 5, 0.78);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+  }
+
+  .modal-overlay.open {
+    display: flex;
+    animation: fadeOverlay 0.25s ease;
+  }
+
+  @keyframes fadeOverlay {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .modal {
+    background: var(--paper);
+    max-width: 680px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 44px 48px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    border-top: 5px solid var(--accent);
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(24px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--ink);
+    opacity: 0.5;
+    line-height: 1;
+    transition: opacity 0.2s;
+  }
+
+  .modal-close:hover { opacity: 1; }
+
+  .modal-category {
+    font-family: 'IM Fell English', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .modal-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+
+  .modal-rule {
+    border: none;
+    border-top: 2px solid var(--rule);
+    margin: 16px 0;
+  }
+
+  .modal-body {
+    font-size: 14.5px;
+    line-height: 1.78;
+    color: #2a1f0e;
+  }
+
+  .modal-source {
+    margin-top: 24px;
+    padding-top: 14px;
+    border-top: 1px solid var(--paper-dark);
+    font-family: 'IM Fell English', serif;
+    font-size: 11px;
+    color: #7a6a50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-source a {
+    color: var(--accent);
+    text-decoration: none;
+    font-style: italic;
+  }
+
+  .modal-source a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--mast-bg);
+    color: var(--mast-text);
+    text-align: center;
+    padding: 16px;
+    font-family: 'IM Fell English', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    opacity: 0.7;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--accent);
+    border-top: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    padding: 12px 0;
+    margin: 16px 0;
+    text-align: center;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .newspaper { margin: 0; }
+    .main-content { padding: 0 16px 32px; }
+    .lead-story { grid-template-columns: 1fr; }
+    .lead-sidebar { border-left: none; border-top: 2px solid var(--rule); padding-left: 0; padding-top: 16px; margin-top: 16px; }
+    .lead-body { column-count: 1; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .article-col { border-right: none; border-bottom: 1px solid var(--paper-dark); padding: 0 0 20px; margin-bottom: 20px; }
+    .modal { padding: 28px 24px; }
+    .modal-headline { font-size: 22px; }
+    .stock-bar { gap: 16px; padding: 12px 16px; }
+    .mast-top, .mast-bottom { flex-direction: column; gap: 4px; text-align: center; }
+  }
+
+  /* Scrollbar */
+  .modal::-webkit-scrollbar { width: 6px; }
+  .modal::-webkit-scrollbar-track { background: var(--paper-dark); }
+  .modal::-webkit-scrollbar-thumb { background: var(--rule); }
+</style>
+</head>
+<body>
+
+<div class="newspaper">
+
+  <!-- MASTHEAD -->
+  <header class="masthead">
+    <div class="mast-top">
+      <span>Established 2026 · Austin, Texas</span>
+      <span>Dedicated to the Space Power Electronics Industry</span>
+      <span>Free to All Engineers</span>
+    </div>
+    <div class="paper-name">The Orbital Gazette</div>
+    <div class="mast-tagline">Intelligence for the Space Power Electronics Industry</div>
+    <hr class="mast-rule">
+    <div class="mast-bottom">
+      <span id="edition-date">Edition — April 23, 2026</span>
+      <span>Rad-Hard · GaN · SiC · Space Power · Semiconductors</span>
+      <span>Biweekly Publication</span>
+    </div>
+  </header>
+
+  <div class="section-banner">Vol. I · No. 1 · Space Power · Semiconductors · Mission News · Market Intelligence</div>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner" id="ticker-content">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- STOCK BAR -->
+  <div class="stock-bar" id="stock-bar">
+    <div class="stock-bar-label">Markets</div>
+    <!-- populated by JS -->
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- LEAD STORY -->
+    <article class="lead-story" id="lead-story">
+      <!-- populated by JS -->
+    </article>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-rule">
+      <div class="section-rule-line"></div>
+      <div class="section-rule-title">Latest Dispatches</div>
+      <div class="section-rule-line right"></div>
+    </div>
+
+    <!-- ARTICLES GRID -->
+    <div class="columns-section">
+      <div class="articles-grid" id="articles-grid">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <div class="footer">
+    The Orbital Gazette · Space Power Electronics Intelligence · Published Every Two Weeks · © 2026
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div class="modal-category" id="modal-cat"></div>
+    <div class="modal-headline" id="modal-headline"></div>
+    <hr class="modal-rule">
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-source">
+      <span id="modal-date"></span>
+      <a id="modal-link" href="#" target="_blank" rel="noopener">Read Original Source →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  DATA — paste your JSON array here
+// ─────────────────────────────────────────────
+const articles = [
+  {
+    "headline": "Renesas Rad-Hard ICs Fly on NASA's Historic Artemis II Crewed Lunar Mission",
+    "category": "Mission Deployments & Equipment",
+    "summary": "Renesas Electronics announced its Intersil-branded radiation-hardened ICs are embedded across multiple subsystems of both the Orion capsule and Space Launch System rocket on NASA's Artemis II mission, which launched April 1. The components handle power regulation, signal integrity, and onboard computing in a crewed deep-space environment. This marks the latest milestone for a product line with over six decades of space flight heritage.",
+    "source_name": "Power Electronics News",
+    "source_url": "https://www.powerelectronicsnews.com/renesas-rad-hard-ics-power-artemis-ii-mission/",
+    "date": "2026-04-01",
+    "edition_date": "2026-04-23"
+  },
+  {
+    "headline": "Infineon's JANS-Qualified GaN Transistor Proves Itself in Deep Space on Artemis II",
+    "category": "New Components",
+    "summary": "Infineon Technologies confirmed its IR HiRel rad-hard semiconductors, including its JANS-qualified 100V GaN transistor, performed flawlessly throughout the 10-day Artemis II mission. The devices supported power management, control, and data communications inside the Orion capsule, the farthest crewed mission from Earth ever recorded. Infineon called the result validation that GaN is now proven technology for demanding space missions.",
+    "source_name": "ELE Times",
+    "source_url": "https://www.eletimes.ai/mission-accomplished-infineon-technology-proves-reliable-once-again-in-space-on-artemis-ii",
+    "date": "2026-04-15",
+    "edition_date": "2026-04-23"
+  },
+  {
+    "headline": "Renesas and EPC Form Global GaN Alliance, Expanding Low-Voltage Space Portfolio",
+    "category": "Startup Companies",
+    "summary": "Renesas Electronics signed a comprehensive licensing agreement with Efficient Power Conversion (EPC) to gain access to EPC's proven low-voltage eGaN technology and supply chain. Renesas will second-source several EPC GaN devices already in mass production and collaborate to establish internal wafer fabrication capabilities. The deal positions Renesas to offer one of the industry's most complete GaN portfolios spanning low to high voltage space applications.",
+    "source_name": "Semiconductor Today",
+    "source_url": "https://www.semiconductor-today.com/news_items/2026/feb/epc-renesas-110226.shtml",
+    "date": "2026-02-11",
+    "edition_date": "2026-04-23"
+  },
+  {
+    "headline": "EPC Space Expands GaN Evaluation Board Portfolio for High-Reliability Space Power",
+    "category": "Reference Designs",
+    "summary": "EPC Space announced an expanded portfolio of GaN-based evaluation boards targeting high-reliability space power applications. The new boards are designed to accelerate development timelines for engineers working on rad-hard power systems by providing deployable reference platforms. This follows EPC Space's earlier launch of a three-phase motor drive evaluation board for space in March 2026.",
+    "source_name": "Power Semiconductors Weekly",
+    "source_url": "https://www.powersemiconductorsweekly.com/",
+    "date": "2026-03-31",
+    "edition_date": "2026-04-23"
+  },
+  {
+    "headline": "Navitas Semiconductor Surges 20% on AI Data Center Power Positioning",
+    "category": "Stock Price Movement",
+    "summary": "Navitas Semiconductor jumped nearly 20% in a single session as investors repositioned the stock as a key supplier for Nvidia's 800V DC power architecture for AI data centers. Navitas was named alongside Infineon, Renesas, and STMicroelectronics as silicon suppliers for Nvidia's next-generation rack designs targeting 1 megawatt by 2027. The rally comes ahead of first-quarter earnings due May 5, with analysts noting high valuation risk alongside the growth narrative.",
+    "source_name": "TS2 Space Tech",
+    "source_url": "https://ts2.tech/en/this-little-known-ai-power-stock-is-surging-its-next-test-comes-may-5/",
+    "date": "2026-04-21",
+    "edition_date": "2026-04-23"
+  },
+  {
+    "headline": "Renesas Stock Jumps 7% After Earnings as Space Design Wins Add Credibility",
+    "category": "Stock Price Movement",
+    "summary": "Renesas Electronics shares surged 7.18% on April 22 following stronger than expected earnings, closing at 3,300 yen. The stock has now gained 71% over the past year, driven by momentum in the semiconductor sector and a string of high-profile space design wins including Artemis II. Q1 2026 earnings are due April 24 with analysts projecting $2.38 billion in revenue.",
+    "source_name": "Meyka",
+    "source_url": "https://meyka.com/blog/6723t-renesas-electronics-earnings-april-2026-2304/",
+    "date": "2026-04-22",
+    "edition_date": "2026-04-23"
+  },
+  {
+    "headline": "Portal Space Systems Raises $50M Series A for Agile Orbital Spacecraft",
+    "category": "Investments & Funding",
+    "summary": "Portal Space Systems, a California aerospace startup co-founded by a former SpaceX engineer, closed a $50 million Series A round co-led by Geodesic Capital and Mach33, with participation from Booz Allen Ventures and ARK Invest. The company is developing high-thrust in-space propulsion systems capable of rapid orbital maneuvering. Total funding now stands at approximately $67.5 million as the company prepares to build and test its first production spacecraft.",
+    "source_name": "Tech Startups",
+    "source_url": "https://techstartups.com/2026/04/09/top-startup-and-tech-funding-news-april-9-2025/",
+    "date": "2026-04-09",
+    "edition_date": "2026-04-23"
+  },
+  {
+    "headline": "Space Power Electronics Market on Track to Hit $1.8B by 2035 at 17% CAGR",
+    "category": "Investments & Funding",
+    "summary": "A new SNS Insider report values the space power electronics market at $372 million in 2025 and projects it will reach $1.8 billion by 2035, growing at a 17.1% compound annual growth rate. Semiconductors accounted for the largest component share at 40.25% in 2025, with North America leading at 36.5% of global revenue. Rising demand for radiation-hardened power management in satellites and deep-space missions is cited as the primary growth driver.",
+    "source_name": "Globe Newswire",
+    "source_url": "https://www.globenewswire.com/news-release/2026/03/16/3255982/0/en/space-power-electronics-market-size-to-surpass-1804-16-million-by-2035-research-by-sns-insider.html",
+    "date": "2026-03-16",
+    "edition_date": "2026-04-23"
+  },
+  {
+    "headline": "Texas Instruments Surges 19% — Best Day Since 2000 as AI and Industrial Demand Roars Back",
+    "category": "Stock Price Movement",
+    "summary": "Texas Instruments stock soared 19% today to a record all-time high after reporting Q1 2026 revenue of $4.83 billion, beating estimates by $300 million, with data center revenue up 90% year-over-year. The company guided Q2 revenue to $5.0–$5.4 billion, well above the $4.87 billion Wall Street expected, signaling the long semiconductor downcycle is firmly over. TI is now up 63% for the year, with 15 analyst upgrades issued following the print.",
+    "source_name": "CNBC",
+    "source_url": "https://www.cnbc.com/2026/04/23/texas-instruments-stock-soars-on-q1-earnings-as-ai-demand-jumps.html",
+    "date": "2026-04-23",
+    "edition_date": "2026-04-23"
+  }
+];
+
+// ─────────────────────────────────────────────
+//  STOCK DATA
+// ─────────────────────────────────────────────
+const stocks = [
+  { ticker: 'TXN',   price: '$279.84', change: '+19.0%', up: true  },
+  { ticker: 'IFNNY', price: '$57.38',  change: '+5.79%', up: true  },
+  { ticker: 'RNECY', price: '$9.02',   change: '+4.76%', up: true  },
+  { ticker: 'NVTS',  price: '$15.82',  change: '+19.8%', up: true  },
+  { ticker: 'STM',   price: '$21.14',  change: '-1.20%', up: false },
+];
+
+// ─────────────────────────────────────────────
+//  RENDER STOCK BAR
+// ─────────────────────────────────────────────
+function renderStocks() {
+  const bar = document.getElementById('stock-bar');
+  stocks.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'stock-item';
+    el.innerHTML = `
+      <span class="stock-ticker">${s.ticker}</span>
+      <span class="stock-price">${s.price}</span>
+      <span class="stock-change ${s.up ? 'stock-up' : 'stock-down'}">${s.change}</span>
+    `;
+    bar.appendChild(el);
+  });
+}
+
+// ─────────────────────────────────────────────
+//  RENDER TICKER
+// ─────────────────────────────────────────────
+function renderTicker() {
+  const inner = document.getElementById('ticker-content');
+  const items = articles.map(a => `<span>${a.headline}</span>`).join('');
+  // duplicate for seamless loop
+  inner.innerHTML = items + items;
+}
+
+// ─────────────────────────────────────────────
+//  FORMAT DATE
+// ─────────────────────────────────────────────
+function fmtDate(d) {
+  const [y, m, day] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
+}
+
+// ─────────────────────────────────────────────
+//  RENDER LEAD STORY (first article)
+// ─────────────────────────────────────────────
+function renderLead() {
+  const a = articles[0];
+  const rest = articles.slice(1, 4);
+  const lead = document.getElementById('lead-story');
+
+  lead.innerHTML = `
+    <div>
+      <div class="lead-eyebrow">${a.category}</div>
+      <h1 class="lead-headline">${a.headline}</h1>
+      <p class="lead-deck">${a.summary.split('.')[0]}.</p>
+      <div class="lead-body">${a.summary}</div>
+      <div class="article-meta" style="margin-top:12px">
+        <span>${fmtDate(a.date)} · ${a.source_name}</span>
+        <a href="${a.source_url}" target="_blank" rel="noopener" class="read-more">Full Source →</a>
+      </div>
+    </div>
+    <div class="lead-sidebar">
+      <div class="sidebar-label">Also This Edition</div>
+      ${rest.map(r => `
+        <div class="article-card" onclick="openModal(${articles.indexOf(r)})">
+          <div class="article-category">${r.category}</div>
+          <div class="article-headline" style="font-size:14px">${r.headline}</div>
+          <div class="article-meta"><span>${fmtDate(r.date)}</span><span class="read-more">Read →</span></div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  // make lead story itself clickable
+  lead.querySelector('.lead-headline').style.cursor = 'pointer';
+  lead.querySelector('.lead-headline').addEventListener('click', () => openModal(0));
+}
+
+// ─────────────────────────────────────────────
+//  RENDER ARTICLES GRID (remaining)
+// ─────────────────────────────────────────────
+function renderGrid() {
+  const remaining = articles.slice(4);
+  const grid = document.getElementById('articles-grid');
+  const perCol = Math.ceil(remaining.length / 3);
+
+  for (let c = 0; c < 3; c++) {
+    const col = document.createElement('div');
+    col.className = 'article-col';
+    const slice = remaining.slice(c * perCol, (c + 1) * perCol);
+
+    slice.forEach(a => {
+      const idx = articles.indexOf(a);
+      const card = document.createElement('div');
+      card.className = 'article-card';
+      card.onclick = () => openModal(idx);
+      card.innerHTML = `
+        <div class="article-category">${a.category}</div>
+        <div class="article-headline">${a.headline}</div>
+        <p class="article-summary">${a.summary}</p>
+        <div class="article-meta">
+          <span>${fmtDate(a.date)} · ${a.source_name}</span>
+          <span class="read-more">Read More →</span>
+        </div>
+      `;
+      col.appendChild(card);
+    });
+
+    grid.appendChild(col);
+  }
+}
+
+// ─────────────────────────────────────────────
+//  MODAL
+// ─────────────────────────────────────────────
+function openModal(idx) {
+  const a = articles[idx];
+  document.getElementById('modal-cat').textContent      = a.category;
+  document.getElementById('modal-headline').textContent = a.headline;
+  document.getElementById('modal-body').textContent     = a.summary;
+  document.getElementById('modal-date').textContent     = `${fmtDate(a.date)} · ${a.source_name}`;
+  document.getElementById('modal-link').href            = a.source_url;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ─────────────────────────────────────────────
+//  EDITION DATE
+// ─────────────────────────────────────────────
+function renderEditionDate() {
+  if (articles.length > 0) {
+    const d = articles[0].edition_date;
+    document.getElementById('edition-date').textContent = `Edition — ${fmtDate(d)}`;
+  }
+}
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+renderStocks();
+renderTicker();
+renderLead();
+renderGrid();
+renderEditionDate();
+</script>
+</body>
+</html>
