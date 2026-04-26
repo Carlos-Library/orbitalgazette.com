@@ -15,8 +15,6 @@
     --rule: #2a1f0e;
     --mast-bg: #1a1208;
     --mast-text: #f5eedc;
-    --col-gap: 24px;
-    --fade-in-duration: 0.8s;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,11 +24,9 @@
     font-family: 'Libre Baskerville', Georgia, serif;
     color: var(--ink);
     min-height: 100vh;
-    background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(0,0,0,0.03) 28px, rgba(0,0,0,0.03) 29px);
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(0,0,0,0.03) 28px, rgba(0,0,0,0.03) 29px);
   }
 
-  /* ── NOISE OVERLAY ── */
   body::before {
     content: '';
     position: fixed;
@@ -47,10 +43,9 @@
     margin: 20px auto;
     background: var(--paper);
     box-shadow: 0 4px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(0,0,0,0.15);
-    position: relative;
   }
 
-  /* ── MASTHEAD ── */
+  /* MASTHEAD */
   .masthead {
     background: var(--mast-bg);
     color: var(--mast-text);
@@ -65,13 +60,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 3px,
-      rgba(255,255,255,0.01) 3px,
-      rgba(255,255,255,0.01) 6px
-    );
+    background: repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255,255,255,0.01) 3px, rgba(255,255,255,0.01) 6px);
   }
 
   .mast-top {
@@ -108,12 +97,7 @@
     margin: 6px 0 14px;
   }
 
-  .mast-rule {
-    border: none;
-    height: 1px;
-    background: rgba(245,238,220,0.25);
-    margin: 8px 0;
-  }
+  .mast-rule { border: none; height: 1px; background: rgba(245,238,220,0.25); margin: 8px 0; }
 
   .mast-bottom {
     display: flex;
@@ -126,7 +110,7 @@
     margin-top: 10px;
   }
 
-  /* ── SECTION BANNER ── */
+  /* SECTION BANNER */
   .section-banner {
     background: var(--accent);
     color: var(--paper);
@@ -138,7 +122,7 @@
     padding: 5px 0;
   }
 
-  /* ── TICKER ── */
+  /* TICKER */
   .ticker-wrap {
     background: var(--ink);
     color: var(--paper);
@@ -154,31 +138,62 @@
   .ticker-inner {
     display: flex;
     white-space: nowrap;
-    animation: ticker 40s linear infinite;
+    animation: ticker 50s linear infinite;
   }
 
-  .ticker-inner span {
-    padding: 0 48px;
-    opacity: 0.85;
-  }
-
-  .ticker-inner span::before {
-    content: '✦ ';
-    color: var(--accent);
-    opacity: 1;
-  }
+  .ticker-inner span { padding: 0 48px; opacity: 0.85; }
+  .ticker-inner span::before { content: '✦ '; color: var(--accent); opacity: 1; }
 
   @keyframes ticker {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
 
-  /* ── MAIN CONTENT ── */
-  .main-content {
-    padding: 0 30px 40px;
+  /* STOCK BAR */
+  .stock-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 30px;
+    border-bottom: 2px solid var(--rule);
+    background: var(--paper-mid);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .stock-bar::-webkit-scrollbar { display: none; }
+
+  .stock-bar-label {
+    font-family: 'IM Fell English', serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-right: 14px;
+    border-right: 1px solid var(--paper-dark);
+    margin-right: 8px;
+    white-space: nowrap;
   }
 
-  /* ── FEATURED LEAD ── */
+  .stock-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    border: 1px solid var(--paper-dark);
+    background: var(--paper);
+    white-space: nowrap;
+  }
+
+  .stock-ticker { font-family: 'IM Fell English', serif; font-size: 10px; letter-spacing: 0.1em; font-weight: bold; color: var(--ink); }
+  .stock-price  { font-family: 'Libre Baskerville', serif; font-size: 11px; color: #3a2e1e; }
+  .stock-change { font-family: 'IM Fell English', serif; font-size: 10px; font-weight: bold; }
+  .stock-up   { color: #2d6a2d; }
+  .stock-down { color: #8b1a1a; }
+
+  /* MAIN CONTENT */
+  .main-content { padding: 0 30px 40px; }
+
+  /* LEAD STORY */
   .lead-story {
     border-bottom: 3px double var(--rule);
     padding: 28px 0 22px;
@@ -187,8 +202,7 @@
     gap: 32px;
     align-items: start;
     opacity: 0;
-    animation: fadeUp var(--fade-in-duration) ease forwards;
-    animation-delay: 0.1s;
+    animation: fadeUp 0.8s ease forwards 0.1s;
   }
 
   .lead-eyebrow {
@@ -202,14 +216,7 @@
     align-items: center;
     gap: 8px;
   }
-
-  .lead-eyebrow::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--accent);
-    opacity: 0.4;
-  }
+  .lead-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--accent); opacity: 0.4; }
 
   .lead-headline {
     font-family: 'Playfair Display', serif;
@@ -219,7 +226,10 @@
     letter-spacing: -0.01em;
     margin-bottom: 14px;
     color: var(--ink);
+    cursor: pointer;
+    transition: color 0.2s;
   }
+  .lead-headline:hover { color: var(--accent); }
 
   .lead-deck {
     font-family: 'IM Fell English', serif;
@@ -236,9 +246,13 @@
     font-size: 14px;
     line-height: 1.72;
     color: #2a1f0e;
-    column-count: 2;
-    column-gap: 24px;
-    column-rule: 1px solid var(--paper-dark);
+  }
+
+  .lead-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
   }
 
   .lead-sidebar {
@@ -257,11 +271,7 @@
     margin-bottom: 14px;
   }
 
-  /* ── COLUMNS GRID ── */
-  .columns-section {
-    padding-top: 24px;
-  }
-
+  /* COLUMNS GRID */
   .section-rule {
     display: flex;
     align-items: center;
@@ -269,15 +279,8 @@
     margin: 24px 0 20px;
   }
 
-  .section-rule-line {
-    flex: 1;
-    height: 2px;
-    background: linear-gradient(90deg, var(--rule) 0%, transparent 100%);
-  }
-
-  .section-rule-line.right {
-    background: linear-gradient(90deg, transparent 0%, var(--rule) 100%);
-  }
+  .section-rule-line { flex: 1; height: 2px; background: linear-gradient(90deg, var(--rule) 0%, transparent 100%); }
+  .section-rule-line.right { background: linear-gradient(90deg, transparent 0%, var(--rule) 100%); }
 
   .section-rule-title {
     font-family: 'Playfair Display', serif;
@@ -296,42 +299,33 @@
   .articles-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
     gap: 0;
+    align-items: stretch;
   }
 
   .article-col {
     padding: 0 20px;
     border-right: 1px solid var(--paper-dark);
     opacity: 0;
-    animation: fadeUp var(--fade-in-duration) ease forwards;
+    animation: fadeUp 0.8s ease forwards;
   }
-
   .article-col:first-child { padding-left: 0; }
   .article-col:last-child  { padding-right: 0; border-right: none; }
-
   .article-col:nth-child(1) { animation-delay: 0.2s; }
   .article-col:nth-child(2) { animation-delay: 0.35s; }
   .article-col:nth-child(3) { animation-delay: 0.5s; }
 
-  /* ── ARTICLE CARD ── */
+  /* ARTICLE CARD */
   .article-card {
     cursor: pointer;
     margin-bottom: 24px;
     padding-bottom: 22px;
     border-bottom: 1px solid var(--paper-dark);
-    transition: all 0.2s ease;
-    position: relative;
+    transition: all 0.2s;
   }
-
-  .article-card:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-
-  .article-card:hover .article-headline {
-    color: var(--accent);
-  }
+  .article-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .article-card:hover .article-headline { color: var(--accent); }
 
   .article-category {
     font-family: 'IM Fell English', serif;
@@ -344,13 +338,7 @@
     align-items: center;
     gap: 6px;
   }
-
-  .article-category::before {
-    content: '';
-    width: 18px;
-    height: 1px;
-    background: var(--accent);
-  }
+  .article-category::before { content: ''; width: 18px; height: 1px; background: var(--accent); }
 
   .article-headline {
     font-family: 'Playfair Display', serif;
@@ -359,7 +347,7 @@
     line-height: 1.25;
     color: var(--ink);
     margin-bottom: 8px;
-    transition: color 0.2s ease;
+    transition: color 0.2s;
   }
 
   .article-summary {
@@ -383,85 +371,75 @@
     color: #7a6a50;
   }
 
-  .read-more {
-    color: var(--accent);
-    font-style: italic;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-  }
+  .read-more { color: var(--accent); font-style: italic; font-size: 10px; letter-spacing: 0.1em; }
 
-  /* ── STOCK BAR ── */
-  .stock-bar {
+  /* URL TOOLTIP */
+  .tooltip-wrap { position: relative; display: inline-block; }
+  .tooltip-wrap .url-tooltip {
+    display: none;
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
     background: var(--ink);
     color: var(--paper);
-    padding: 12px 30px;
-    display: flex;
-    gap: 32px;
-    align-items: center;
-    border-top: 2px solid var(--accent);
-    flex-wrap: wrap;
-  }
-
-  .stock-bar-label {
     font-family: 'IM Fell English', serif;
     font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent);
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
     white-space: nowrap;
+    border: 1px solid var(--accent);
+    pointer-events: none;
+    z-index: 100;
   }
+  .tooltip-wrap .url-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--accent);
+  }
+  .tooltip-wrap:hover .url-tooltip { display: block; }
 
-  .stock-item {
-    display: flex;
-    flex-direction: column;
+  /* LINKEDIN SHARE BUTTON */
+  .li-btn { display: none; }
+  .li-btn svg { width: 10px; height: 10px; fill: currentColor; flex-shrink: 0; }
+
+  .m-li-btn {
+    display: inline-flex;
     align-items: center;
-    gap: 2px;
-  }
-
-  .stock-ticker {
+    gap: 6px;
     font-family: 'IM Fell English', serif;
     font-size: 10px;
-    letter-spacing: 0.12em;
-    opacity: 0.6;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7a6a50;
+    border: 1px solid var(--paper-dark);
+    padding: 5px 12px;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
   }
+  .m-li-btn:hover { border-color: #0a66c2; color: #0a66c2; background: rgba(10,102,194,0.05); }
+  .m-li-btn svg { width: 11px; height: 11px; fill: currentColor; flex-shrink: 0; }
 
-  .stock-price {
-    font-family: 'Playfair Display', serif;
-    font-size: 15px;
-    font-weight: 700;
-  }
-
-  .stock-change {
-    font-family: 'IM Fell English', serif;
-    font-size: 10px;
-    font-weight: bold;
-  }
-
-  .stock-up   { color: #5cba6a; }
-  .stock-down { color: #cc4444; }
-
-  /* ── MODAL ── */
+  /* MODAL */
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(15, 10, 5, 0.78);
+    background: rgba(15,10,5,0.78);
     z-index: 999;
     align-items: center;
     justify-content: center;
     padding: 20px;
     backdrop-filter: blur(3px);
   }
-
-  .modal-overlay.open {
-    display: flex;
-    animation: fadeOverlay 0.25s ease;
-  }
-
-  @keyframes fadeOverlay {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+  .modal-overlay.open { display: flex; animation: fadeOverlay 0.25s ease; }
+  @keyframes fadeOverlay { from { opacity: 0; } to { opacity: 1; } }
 
   .modal {
     background: var(--paper);
@@ -475,26 +453,23 @@
     border-top: 5px solid var(--accent);
     animation: slideUp 0.3s ease;
   }
+  @keyframes slideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-  @keyframes slideUp {
-    from { transform: translateY(24px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
-  }
+  .modal::-webkit-scrollbar { width: 6px; }
+  .modal::-webkit-scrollbar-track { background: var(--paper-dark); }
+  .modal::-webkit-scrollbar-thumb { background: var(--rule); }
 
   .modal-close {
     position: absolute;
-    top: 16px;
-    right: 20px;
+    top: 16px; right: 20px;
     background: none;
     border: none;
     font-size: 22px;
     cursor: pointer;
     color: var(--ink);
     opacity: 0.5;
-    line-height: 1;
     transition: opacity 0.2s;
   }
-
   .modal-close:hover { opacity: 1; }
 
   .modal-category {
@@ -515,17 +490,9 @@
     color: var(--ink);
   }
 
-  .modal-rule {
-    border: none;
-    border-top: 2px solid var(--rule);
-    margin: 16px 0;
-  }
+  .modal-rule { border: none; border-top: 2px solid var(--rule); margin: 16px 0; }
 
-  .modal-body {
-    font-size: 14.5px;
-    line-height: 1.78;
-    color: #2a1f0e;
-  }
+  .modal-body { font-size: 14.5px; line-height: 1.78; color: #2a1f0e; }
 
   .modal-source {
     margin-top: 24px;
@@ -537,17 +504,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
-  .modal-source a {
-    color: var(--accent);
-    text-decoration: none;
-    font-style: italic;
-  }
-
+  .modal-source a { color: var(--accent); text-decoration: none; font-style: italic; }
   .modal-source a:hover { text-decoration: underline; }
 
-  /* ── FOOTER ── */
+  .modal-actions { display: flex; align-items: center; gap: 12px; }
+
+  /* FOOTER */
   .footer {
     background: var(--mast-bg);
     color: var(--mast-text);
@@ -559,27 +525,8 @@
     opacity: 0.7;
   }
 
-  /* ── PULL QUOTE ── */
-  .pull-quote {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 16px;
-    line-height: 1.5;
-    color: var(--accent);
-    border-top: 2px solid var(--accent);
-    border-bottom: 2px solid var(--accent);
-    padding: 12px 0;
-    margin: 16px 0;
-    text-align: center;
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     .newspaper { margin: 0; }
     .main-content { padding: 0 16px 32px; }
@@ -590,14 +537,8 @@
     .article-col { border-right: none; border-bottom: 1px solid var(--paper-dark); padding: 0 0 20px; margin-bottom: 20px; }
     .modal { padding: 28px 24px; }
     .modal-headline { font-size: 22px; }
-    .stock-bar { gap: 16px; padding: 12px 16px; }
     .mast-top, .mast-bottom { flex-direction: column; gap: 4px; text-align: center; }
   }
-
-  /* Scrollbar */
-  .modal::-webkit-scrollbar { width: 6px; }
-  .modal::-webkit-scrollbar-track { background: var(--paper-dark); }
-  .modal::-webkit-scrollbar-thumb { background: var(--rule); }
 </style>
 </head>
 <body>
@@ -617,7 +558,7 @@
     <div class="mast-bottom">
       <span id="edition-date">Edition — April 23, 2026</span>
       <span>Rad-Hard · GaN · SiC · Space Power · Semiconductors</span>
-      <span>Monthly Publication</span>
+      <span>Published the 1st of Every Month</span>
     </div>
   </header>
 
@@ -625,43 +566,31 @@
 
   <!-- TICKER -->
   <div class="ticker-wrap">
-    <div class="ticker-inner" id="ticker-content">
-      <!-- populated by JS -->
-    </div>
+    <div class="ticker-inner" id="ticker-content"></div>
   </div>
 
   <!-- STOCK BAR -->
   <div class="stock-bar" id="stock-bar">
     <div class="stock-bar-label">Markets</div>
-    <!-- populated by JS -->
   </div>
 
   <!-- MAIN CONTENT -->
   <main class="main-content">
 
-    <!-- LEAD STORY -->
-    <article class="lead-story" id="lead-story">
-      <!-- populated by JS -->
-    </article>
+    <article class="lead-story" id="lead-story"></article>
 
-    <!-- SECTION DIVIDER -->
     <div class="section-rule">
       <div class="section-rule-line"></div>
       <div class="section-rule-title">Latest Dispatches</div>
       <div class="section-rule-line right"></div>
     </div>
 
-    <!-- ARTICLES GRID -->
-    <div class="columns-section">
-      <div class="articles-grid" id="articles-grid">
-        <!-- populated by JS -->
-      </div>
-    </div>
+    <div class="articles-grid" id="articles-grid"></div>
 
   </main>
 
   <div class="footer">
-    The Orbital Gazette · Space Power Electronics Intelligence · Published 1st of Every Month · © 2026
+    The Orbital Gazette · Space Power Electronics Intelligence · Published the 1st of Every Month · © 2026
   </div>
 </div>
 
@@ -675,196 +604,162 @@
     <div class="modal-body" id="modal-body"></div>
     <div class="modal-source">
       <span id="modal-date"></span>
-      <a id="modal-link" href="#" target="_blank" rel="noopener">Read Original Source →</a>
+      <div class="modal-actions">
+        <a class="m-li-btn" id="modal-li-btn"></a>
+        <a id="modal-link" href="#" target="_blank" rel="noopener" class="read-more tooltip-wrap">Read Original Source →<span class="url-tooltip" id="modal-tooltip"></span></a>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-// ─────────────────────────────────────────────
-//  DATA — paste your JSON array here
-// ─────────────────────────────────────────────
+// ── DATA ─────────────────────────────────────────
 const articles = [
-  {
-    "headline": "Renesas Rad-Hard ICs Fly on NASA's Historic Artemis II Crewed Lunar Mission",
-    "category": "Mission Deployments & Equipment",
-    "summary": "Renesas Electronics announced its Intersil-branded radiation-hardened ICs are embedded across multiple subsystems of both the Orion capsule and Space Launch System rocket on NASA's Artemis II mission, which launched April 1. The components handle power regulation, signal integrity, and onboard computing in a crewed deep-space environment. This marks the latest milestone for a product line with over six decades of space flight heritage.",
-    "source_name": "Power Electronics News",
-    "source_url": "https://www.powerelectronicsnews.com/renesas-rad-hard-ics-power-artemis-ii-mission/",
-    "date": "2026-04-01",
-    "edition_date": "2026-04-23"
-  },
-  {
-    "headline": "Infineon's JANS-Qualified GaN Transistor Proves Itself in Deep Space on Artemis II",
-    "category": "New Components",
-    "summary": "Infineon Technologies confirmed its IR HiRel rad-hard semiconductors, including its JANS-qualified 100V GaN transistor, performed flawlessly throughout the 10-day Artemis II mission. The devices supported power management, control, and data communications inside the Orion capsule, the farthest crewed mission from Earth ever recorded. Infineon called the result validation that GaN is now proven technology for demanding space missions.",
-    "source_name": "ELE Times",
-    "source_url": "https://www.eletimes.ai/mission-accomplished-infineon-technology-proves-reliable-once-again-in-space-on-artemis-ii",
-    "date": "2026-04-15",
-    "edition_date": "2026-04-23"
-  },
-  {
-    "headline": "Renesas and EPC Form Global GaN Alliance, Expanding Low-Voltage Space Portfolio",
-    "category": "Startup Companies",
-    "summary": "Renesas Electronics signed a comprehensive licensing agreement with Efficient Power Conversion (EPC) to gain access to EPC's proven low-voltage eGaN technology and supply chain. Renesas will second-source several EPC GaN devices already in mass production and collaborate to establish internal wafer fabrication capabilities. The deal positions Renesas to offer one of the industry's most complete GaN portfolios spanning low to high voltage space applications.",
-    "source_name": "Semiconductor Today",
-    "source_url": "https://www.semiconductor-today.com/news_items/2026/feb/epc-renesas-110226.shtml",
-    "date": "2026-02-11",
-    "edition_date": "2026-04-23"
-  },
-  {
-    "headline": "EPC Space Expands GaN Evaluation Board Portfolio for High-Reliability Space Power",
-    "category": "Reference Designs",
-    "summary": "EPC Space announced an expanded portfolio of GaN-based evaluation boards targeting high-reliability space power applications. The new boards are designed to accelerate development timelines for engineers working on rad-hard power systems by providing deployable reference platforms. This follows EPC Space's earlier launch of a three-phase motor drive evaluation board for space in March 2026.",
-    "source_name": "Power Semiconductors Weekly",
-    "source_url": "https://www.powersemiconductorsweekly.com/",
-    "date": "2026-03-31",
-    "edition_date": "2026-04-23"
-  },
-  {
-    "headline": "Navitas Semiconductor Surges 20% on AI Data Center Power Positioning",
-    "category": "Stock Price Movement",
-    "summary": "Navitas Semiconductor jumped nearly 20% in a single session as investors repositioned the stock as a key supplier for Nvidia's 800V DC power architecture for AI data centers. Navitas was named alongside Infineon, Renesas, and STMicroelectronics as silicon suppliers for Nvidia's next-generation rack designs targeting 1 megawatt by 2027. The rally comes ahead of first-quarter earnings due May 5, with analysts noting high valuation risk alongside the growth narrative.",
-    "source_name": "TS2 Space Tech",
-    "source_url": "https://ts2.tech/en/this-little-known-ai-power-stock-is-surging-its-next-test-comes-may-5/",
-    "date": "2026-04-21",
-    "edition_date": "2026-04-23"
-  },
-  {
-    "headline": "Renesas Stock Jumps 7% After Earnings as Space Design Wins Add Credibility",
-    "category": "Stock Price Movement",
-    "summary": "Renesas Electronics shares surged 7.18% on April 22 following stronger than expected earnings, closing at 3,300 yen. The stock has now gained 71% over the past year, driven by momentum in the semiconductor sector and a string of high-profile space design wins including Artemis II. Q1 2026 earnings are due April 24 with analysts projecting $2.38 billion in revenue.",
-    "source_name": "Meyka",
-    "source_url": "https://meyka.com/blog/6723t-renesas-electronics-earnings-april-2026-2304/",
-    "date": "2026-04-22",
-    "edition_date": "2026-04-23"
-  },
-  {
-    "headline": "Portal Space Systems Raises $50M Series A for Agile Orbital Spacecraft",
-    "category": "Investments & Funding",
-    "summary": "Portal Space Systems, a California aerospace startup co-founded by a former SpaceX engineer, closed a $50 million Series A round co-led by Geodesic Capital and Mach33, with participation from Booz Allen Ventures and ARK Invest. The company is developing high-thrust in-space propulsion systems capable of rapid orbital maneuvering. Total funding now stands at approximately $67.5 million as the company prepares to build and test its first production spacecraft.",
-    "source_name": "Tech Startups",
-    "source_url": "https://techstartups.com/2026/04/09/top-startup-and-tech-funding-news-april-9-2025/",
-    "date": "2026-04-09",
-    "edition_date": "2026-04-23"
-  },
-  {
-    "headline": "Space Power Electronics Market on Track to Hit $1.8B by 2035 at 17% CAGR",
-    "category": "Investments & Funding",
-    "summary": "A new SNS Insider report values the space power electronics market at $372 million in 2025 and projects it will reach $1.8 billion by 2035, growing at a 17.1% compound annual growth rate. Semiconductors accounted for the largest component share at 40.25% in 2025, with North America leading at 36.5% of global revenue. Rising demand for radiation-hardened power management in satellites and deep-space missions is cited as the primary growth driver.",
-    "source_name": "Globe Newswire",
-    "source_url": "https://www.globenewswire.com/news-release/2026/03/16/3255982/0/en/space-power-electronics-market-size-to-surpass-1804-16-million-by-2035-research-by-sns-insider.html",
-    "date": "2026-03-16",
-    "edition_date": "2026-04-23"
-  },
-  {
-    "headline": "Texas Instruments Surges 19% — Best Day Since 2000 as AI and Industrial Demand Roars Back",
-    "category": "Stock Price Movement",
-    "summary": "Texas Instruments stock soared 19% today to a record all-time high after reporting Q1 2026 revenue of $4.83 billion, beating estimates by $300 million, with data center revenue up 90% year-over-year. The company guided Q2 revenue to $5.0–$5.4 billion, well above the $4.87 billion Wall Street expected, signaling the long semiconductor downcycle is firmly over. TI is now up 63% for the year, with 15 analyst upgrades issued following the print.",
-    "source_name": "CNBC",
-    "source_url": "https://www.cnbc.com/2026/04/23/texas-instruments-stock-soars-on-q1-earnings-as-ai-demand-jumps.html",
-    "date": "2026-04-23",
-    "edition_date": "2026-04-23"
-  }
+  {headline:"Renesas Rad-Hard ICs Fly on NASA's Historic Artemis II Crewed Lunar Mission",category:"Mission Deployments & Equipment",summary:"Renesas Electronics announced its Intersil-branded radiation-hardened ICs are embedded across multiple subsystems of both the Orion capsule and Space Launch System rocket on NASA's Artemis II mission, which launched April 1. The components handle power regulation, signal integrity, and onboard computing in a crewed deep-space environment. This marks the latest milestone for a product line with over six decades of space flight heritage.",source_name:"Power Electronics News",source_url:"https://www.powerelectronicsnews.com/renesas-rad-hard-ics-power-artemis-ii-mission/",date:"2026-04-01",edition_date:"2026-04-23"},
+  {headline:"Infineon's JANS-Qualified GaN Transistor Proves Itself in Deep Space on Artemis II",category:"New Components",summary:"Infineon Technologies confirmed its IR HiRel rad-hard semiconductors, including its JANS-qualified 100V GaN transistor, performed flawlessly throughout the 10-day Artemis II mission. The devices supported power management, control, and data communications inside the Orion capsule, the farthest crewed mission from Earth ever recorded. Infineon called the result validation that GaN is now proven technology for demanding space missions.",source_name:"ELE Times",source_url:"https://www.eletimes.ai/mission-accomplished-infineon-technology-proves-reliable-once-again-in-space-on-artemis-ii",date:"2026-04-15",edition_date:"2026-04-23"},
+  {headline:"Renesas and EPC Form Global GaN Alliance, Expanding Low-Voltage Space Portfolio",category:"Industry",summary:"Renesas Electronics signed a comprehensive licensing agreement with Efficient Power Conversion (EPC) to gain access to EPC's proven low-voltage eGaN technology and supply chain. Renesas will second-source several EPC GaN devices already in mass production and collaborate to establish internal wafer fabrication capabilities. The deal positions Renesas to offer one of the industry's most complete GaN portfolios spanning low to high voltage space applications.",source_name:"Semiconductor Today",source_url:"https://www.semiconductor-today.com/news_items/2026/feb/epc-renesas-110226.shtml",date:"2026-02-11",edition_date:"2026-04-23"},
+  {headline:"EPC Space Expands GaN Evaluation Board Portfolio for High-Reliability Space Power",category:"Reference Designs",summary:"EPC Space announced an expanded portfolio of GaN-based evaluation boards targeting high-reliability space power applications. The new boards are designed to accelerate development timelines for engineers working on rad-hard power systems by providing deployable reference platforms. This follows EPC Space's earlier launch of a three-phase motor drive evaluation board for space in March 2026.",source_name:"Power Semiconductors Weekly",source_url:"https://www.powersemiconductorsweekly.com/",date:"2026-03-31",edition_date:"2026-04-23"},
+  {headline:"Navitas Semiconductor Surges 20% on AI Data Center Power Positioning",category:"Stock Price Movement",summary:"Navitas Semiconductor jumped nearly 20% in a single session as investors repositioned the stock as a key supplier for Nvidia's 800V DC power architecture for AI data centers. Navitas was named alongside Infineon, Renesas, and STMicroelectronics as silicon suppliers for Nvidia's next-generation rack designs targeting 1 megawatt by 2027. The rally comes ahead of first-quarter earnings due May 5, with analysts noting high valuation risk alongside the growth narrative.",source_name:"TS2 Space Tech",source_url:"https://ts2.tech/en/this-little-known-ai-power-stock-is-surging-its-next-test-comes-may-5/",date:"2026-04-21",edition_date:"2026-04-23"},
+  {headline:"Renesas Stock Jumps 7% After Earnings as Space Design Wins Add Credibility",category:"Stock Price Movement",summary:"Renesas Electronics shares surged 7.18% on April 22 following stronger than expected earnings, closing at 3,300 yen. The stock has now gained 71% over the past year, driven by momentum in the semiconductor sector and a string of high-profile space design wins including Artemis II. Q1 2026 earnings are due April 24 with analysts projecting $2.38 billion in revenue.",source_name:"Meyka",source_url:"https://meyka.com/blog/6723t-renesas-electronics-earnings-april-2026-2304/",date:"2026-04-22",edition_date:"2026-04-23"},
+  {headline:"Portal Space Systems Raises $50M Series A for Agile Orbital Spacecraft",category:"Investments & Funding",summary:"Portal Space Systems, a California aerospace startup co-founded by a former SpaceX engineer, closed a $50 million Series A round co-led by Geodesic Capital and Mach33, with participation from Booz Allen Ventures and ARK Invest. The company is developing high-thrust in-space propulsion systems capable of rapid orbital maneuvering. Total funding now stands at approximately $67.5 million as the company prepares to build and test its first production spacecraft.",source_name:"Tech Startups",source_url:"https://techstartups.com/2026/04/09/top-startup-and-tech-funding-news-april-9-2025/",date:"2026-04-09",edition_date:"2026-04-23"},
+  {headline:"Space Power Electronics Market on Track to Hit $1.8B by 2035 at 17% CAGR",category:"Investments & Funding",summary:"A new SNS Insider report values the space power electronics market at $372 million in 2025 and projects it will reach $1.8 billion by 2035, growing at a 17.1% compound annual growth rate. Semiconductors accounted for the largest component share at 40.25% in 2025, with North America leading at 36.5% of global revenue. Rising demand for radiation-hardened power management in satellites and deep-space missions is cited as the primary growth driver.",source_name:"Globe Newswire",source_url:"https://www.globenewswire.com/news-release/2026/03/16/3255982/0/en/space-power-electronics-market-size-to-surpass-1804-16-million-by-2035-research-by-sns-insider.html",date:"2026-03-16",edition_date:"2026-04-23"},
+  {headline:"Texas Instruments Surges 19% — Best Day Since 2000 as AI and Industrial Demand Roars Back",category:"Stock Price Movement",summary:"Texas Instruments stock soared 19% today to a record all-time high after reporting Q1 2026 revenue of $4.83 billion, beating estimates by $300 million, with data center revenue up 90% year-over-year. The company guided Q2 revenue to $5.0–$5.4 billion, well above the $4.87 billion Wall Street expected, signaling the long semiconductor downcycle is firmly over. TI is now up 63% for the year, with 15 analyst upgrades issued following the print.",source_name:"CNBC",source_url:"https://www.cnbc.com/2026/04/23/texas-instruments-stock-soars-on-q1-earnings-as-ai-demand-jumps.html",date:"2026-04-23",edition_date:"2026-04-23"},
+  {headline:"CesiumAstro Selected to Support GMD Weapon System Communications for Missile Defense Agency",category:"Startup Companies",summary:"CesiumAstro has been selected to support the Ground-based Midcourse Defense Weapon System In-flight Interceptor Communications System for the Missile Defense Agency, marking a significant contract win for the Austin-based space communications startup. The award expands CesiumAstro's footprint in high-stakes defense and missile defense applications, where reliable in-flight communications are mission critical. CesiumAstro specializes in active phased array communication systems for space and defense platforms and continues to grow its portfolio of government and defense contracts.",source_name:"CesiumAstro",source_url:"https://www.cesiumastro.com",date:"2026-04-23",edition_date:"2026-04-23"}
 ];
 
-// ─────────────────────────────────────────────
-//  STOCK DATA
-// ─────────────────────────────────────────────
-const stocks = [
-  { ticker: 'TXN',   price: '$279.84', change: '+19.0%', up: true  },
-  { ticker: 'IFNNY', price: '$57.38',  change: '+5.79%', up: true  },
-  { ticker: 'RNECY', price: '$9.02',   change: '+4.76%', up: true  },
-  { ticker: 'NVTS',  price: '$15.82',  change: '+19.8%', up: true  },
-  { ticker: 'STM',   price: '$21.14',  change: '-1.20%', up: false },
+// ── STOCKS — LIVE ────────────────────────────────
+const TICKERS = ['TXN', 'IFNNY', 'RNECY', 'NVTS', 'STM'];
+
+const staticStocks = [
+  {ticker:'TXN',   price:'$279.84', change:'+19.0%', up:true},
+  {ticker:'IFNNY', price:'$57.38',  change:'+5.79%', up:true},
+  {ticker:'RNECY', price:'$9.02',   change:'+4.76%', up:true},
+  {ticker:'NVTS',  price:'$15.82',  change:'+19.8%', up:true},
+  {ticker:'STM',   price:'$21.14',  change:'-1.20%', up:false},
 ];
 
-// ─────────────────────────────────────────────
-//  RENDER STOCK BAR
-// ─────────────────────────────────────────────
-function renderStocks() {
+function renderStockBar(data) {
   const bar = document.getElementById('stock-bar');
-  stocks.forEach(s => {
+  bar.querySelectorAll('.stock-item').forEach(el => el.remove());
+  data.forEach(s => {
     const el = document.createElement('div');
     el.className = 'stock-item';
-    el.innerHTML = `
-      <span class="stock-ticker">${s.ticker}</span>
-      <span class="stock-price">${s.price}</span>
-      <span class="stock-change ${s.up ? 'stock-up' : 'stock-down'}">${s.change}</span>
-    `;
+    el.innerHTML = `<span class="stock-ticker">${s.ticker}</span><span class="stock-price">${s.price}</span><span class="stock-change ${s.up ? 'stock-up' : 'stock-down'}">${s.change}</span>`;
     bar.appendChild(el);
   });
 }
 
-// ─────────────────────────────────────────────
-//  RENDER TICKER
-// ─────────────────────────────────────────────
-function renderTicker() {
+// Show static prices immediately
+renderStockBar(staticStocks);
+
+// Then try to fetch live prices
+async function fetchLiveStocks() {
+  try {
+    const symbols = TICKERS.join(',');
+    const url = `https://query1.finance.yahoo.com/v8/finance/quote?symbols=${symbols}`;
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    const res = await fetch(proxy);
+    if (!res.ok) throw new Error('fetch failed');
+    const json = await res.json();
+    const parsed = JSON.parse(json.contents);
+    const quotes = parsed?.quoteResponse?.result || [];
+    if (quotes.length === 0) throw new Error('no data');
+    const data = quotes.map(q => {
+      const change = q.regularMarketChangePercent || 0;
+      const price = q.regularMarketPrice || 0;
+      return {
+        ticker: q.symbol,
+        price: `$${price.toFixed(2)}`,
+        change: `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`,
+        up: change >= 0
+      };
+    });
+    renderStockBar(data);
+  } catch(e) {
+    // Static prices already showing — do nothing
+  }
+}
+
+fetchLiveStocks();
+
+// ── LINKEDIN SVG ──────────────────────────────────
+const LI_SVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`;
+
+// ── HELPERS ───────────────────────────────────────
+function fmtDate(d) {
+  const [y,m,day] = d.split('-');
+  const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${mo[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
+}
+
+function liShare(e, headline, url) {
+  e.stopPropagation();
+  const text = encodeURIComponent(headline + ' — via The Orbital Gazette');
+  const link = encodeURIComponent(url || 'https://orbitalgazette.com');
+  window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + link + '&summary=' + text, '_blank', 'width=600,height=600');
+}
+
+
+// ── TICKER ────────────────────────────────────────
+(function() {
   const inner = document.getElementById('ticker-content');
   const items = articles.map(a => `<span>${a.headline}</span>`).join('');
-  // duplicate for seamless loop
   inner.innerHTML = items + items;
-}
+})();
 
-// ─────────────────────────────────────────────
-//  FORMAT DATE
-// ─────────────────────────────────────────────
-function fmtDate(d) {
-  const [y, m, day] = d.split('-');
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
-}
-
-// ─────────────────────────────────────────────
-//  RENDER LEAD STORY (first article)
-// ─────────────────────────────────────────────
-function renderLead() {
+// ── LEAD STORY ────────────────────────────────────
+(function() {
   const a = articles[0];
   const rest = articles.slice(1, 4);
   const lead = document.getElementById('lead-story');
-
   lead.innerHTML = `
     <div>
       <div class="lead-eyebrow">${a.category}</div>
-      <h1 class="lead-headline">${a.headline}</h1>
-      <p class="lead-deck">${a.summary.split('.')[0]}.</p>
+      <h1 class="lead-headline" onclick="openModal(0)">${a.headline}</h1>
       <div class="lead-body">${a.summary}</div>
-      <div class="article-meta" style="margin-top:12px">
-        <span>${fmtDate(a.date)} · ${a.source_name}</span>
-        <a href="${a.source_url}" target="_blank" rel="noopener" class="read-more">Full Source →</a>
+      <div class="lead-meta">
+        <span style="font-family:'IM Fell English',serif;font-size:9.5px;color:#7a6a50;">${fmtDate(a.date)} · ${a.source_name}</span>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <a class="li-btn" onclick="liShare(event,'${a.headline.replace(/'/g,"\\'")}','${a.source_url}')">${LI_SVG} Share</a>
+          <span class="tooltip-wrap">
+            <a href="${a.source_url}" target="_blank" rel="noopener" class="read-more">Full Source →</a>
+            <span class="url-tooltip">${a.source_url}</span>
+          </span>
+        </div>
       </div>
     </div>
     <div class="lead-sidebar">
       <div class="sidebar-label">Also This Edition</div>
-      ${rest.map(r => `
-        <div class="article-card" onclick="openModal(${articles.indexOf(r)})">
+      ${rest.map((r,i) => `
+        <div class="article-card" onclick="openModal(${i+1})">
           <div class="article-category">${r.category}</div>
           <div class="article-headline" style="font-size:14px">${r.headline}</div>
           <div class="article-meta"><span>${fmtDate(r.date)}</span><span class="read-more">Read →</span></div>
-        </div>
-      `).join('')}
-    </div>
-  `;
+        </div>`).join('')}
+    </div>`;
+})();
 
-  // make lead story itself clickable
-  lead.querySelector('.lead-headline').style.cursor = 'pointer';
-  lead.querySelector('.lead-headline').addEventListener('click', () => openModal(0));
-}
-
-// ─────────────────────────────────────────────
-//  RENDER ARTICLES GRID (remaining)
-// ─────────────────────────────────────────────
-function renderGrid() {
+// ── ARTICLES GRID ─────────────────────────────────
+(function() {
   const remaining = articles.slice(4);
+  // We have 6 articles — lay them out as 3 cols x 2 rows
+  // Col 1: Stock (Navitas, Renesas) | Col 2: Stock (TI), Investments (Portal) | Col 3: Investments (Market), Startup (Cesium)
   const grid = document.getElementById('articles-grid');
-  const perCol = Math.ceil(remaining.length / 3);
+  grid.style.display = 'grid';
+  grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
 
-  for (let c = 0; c < 3; c++) {
+  // Manually assign to 3 columns keeping categories together as much as possible
+  const col1 = [remaining[0], remaining[1]]; // Navitas stock, Renesas stock
+  const col2 = [remaining[2], remaining[3]]; // TI stock, Portal funding
+  const col3 = [remaining[4], remaining[5]]; // Market funding, CesiumAstro
+
+  [col1, col2, col3].forEach((colArticles, c) => {
     const col = document.createElement('div');
     col.className = 'article-col';
-    const slice = remaining.slice(c * perCol, (c + 1) * perCol);
+    col.style.animationDelay = `${0.2 + c * 0.15}s`;
 
-    slice.forEach(a => {
+    colArticles.forEach(a => {
+      if (!a) return;
       const idx = articles.indexOf(a);
       const card = document.createElement('div');
       card.className = 'article-card';
@@ -876,18 +771,19 @@ function renderGrid() {
         <div class="article-meta">
           <span>${fmtDate(a.date)} · ${a.source_name}</span>
           <span class="read-more">Read More →</span>
-        </div>
-      `;
+        </div>`;
       col.appendChild(card);
     });
 
     grid.appendChild(col);
-  }
-}
+  });
+})();
 
-// ─────────────────────────────────────────────
-//  MODAL
-// ─────────────────────────────────────────────
+// ── EDITION DATE ──────────────────────────────────
+const ed = articles[0]?.edition_date;
+if (ed) document.getElementById('edition-date').textContent = `Edition — ${fmtDate(ed)}`;
+
+// ── MODAL ─────────────────────────────────────────
 function openModal(idx) {
   const a = articles[idx];
   document.getElementById('modal-cat').textContent      = a.category;
@@ -895,6 +791,10 @@ function openModal(idx) {
   document.getElementById('modal-body').textContent     = a.summary;
   document.getElementById('modal-date').textContent     = `${fmtDate(a.date)} · ${a.source_name}`;
   document.getElementById('modal-link').href            = a.source_url;
+  document.getElementById('modal-tooltip').textContent  = a.source_url;
+  const liBtn = document.getElementById('modal-li-btn');
+  liBtn.innerHTML = LI_SVG + ' Share on LinkedIn';
+  liBtn.onclick = (e) => liShare(e, a.headline, a.source_url);
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -905,29 +805,8 @@ function closeModal() {
 }
 
 document.getElementById('modal-close').addEventListener('click', closeModal);
-document.getElementById('modal-overlay').addEventListener('click', e => {
-  if (e.target === document.getElementById('modal-overlay')) closeModal();
-});
+document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target.id === 'modal-overlay') closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-// ─────────────────────────────────────────────
-//  EDITION DATE
-// ─────────────────────────────────────────────
-function renderEditionDate() {
-  if (articles.length > 0) {
-    const d = articles[0].edition_date;
-    document.getElementById('edition-date').textContent = `Edition — ${fmtDate(d)}`;
-  }
-}
-
-// ─────────────────────────────────────────────
-//  INIT
-// ─────────────────────────────────────────────
-renderStocks();
-renderTicker();
-renderLead();
-renderGrid();
-renderEditionDate();
 </script>
 </body>
 </html>
