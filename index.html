@@ -624,7 +624,8 @@ const articles = [
   {headline:"Portal Space Systems Raises $50M Series A for Agile Orbital Spacecraft",category:"Investments & Funding",summary:"Portal Space Systems, a California aerospace startup co-founded by a former SpaceX engineer, closed a $50 million Series A round co-led by Geodesic Capital and Mach33, with participation from Booz Allen Ventures and ARK Invest. The company is developing high-thrust in-space propulsion systems capable of rapid orbital maneuvering. Total funding now stands at approximately $67.5 million as the company prepares to build and test its first production spacecraft.",source_name:"Tech Startups",source_url:"https://techstartups.com/2026/04/09/top-startup-and-tech-funding-news-april-9-2025/",date:"2026-04-09",edition_date:"2026-04-23"},
   {headline:"Space Power Electronics Market on Track to Hit $1.8B by 2035 at 17% CAGR",category:"Investments & Funding",summary:"A new SNS Insider report values the space power electronics market at $372 million in 2025 and projects it will reach $1.8 billion by 2035, growing at a 17.1% compound annual growth rate. Semiconductors accounted for the largest component share at 40.25% in 2025, with North America leading at 36.5% of global revenue. Rising demand for radiation-hardened power management in satellites and deep-space missions is cited as the primary growth driver.",source_name:"Globe Newswire",source_url:"https://www.globenewswire.com/news-release/2026/03/16/3255982/0/en/space-power-electronics-market-size-to-surpass-1804-16-million-by-2035-research-by-sns-insider.html",date:"2026-03-16",edition_date:"2026-04-23"},
   {headline:"Texas Instruments Surges 19% — Best Day Since 2000 as AI and Industrial Demand Roars Back",category:"Stock Price Movement",summary:"Texas Instruments stock soared 19% today to a record all-time high after reporting Q1 2026 revenue of $4.83 billion, beating estimates by $300 million, with data center revenue up 90% year-over-year. The company guided Q2 revenue to $5.0–$5.4 billion, well above the $4.87 billion Wall Street expected, signaling the long semiconductor downcycle is firmly over. TI is now up 63% for the year, with 15 analyst upgrades issued following the print.",source_name:"CNBC",source_url:"https://www.cnbc.com/2026/04/23/texas-instruments-stock-soars-on-q1-earnings-as-ai-demand-jumps.html",date:"2026-04-23",edition_date:"2026-04-23"},
-  {headline:"CesiumAstro Selected to Support GMD Weapon System Communications for Missile Defense Agency",category:"Startup Companies",summary:"CesiumAstro has been selected to support the Ground-based Midcourse Defense Weapon System In-flight Interceptor Communications System for the Missile Defense Agency, marking a significant contract win for the Austin-based space communications startup. The award expands CesiumAstro's footprint in high-stakes defense and missile defense applications, where reliable in-flight communications are mission critical. CesiumAstro specializes in active phased array communication systems for space and defense platforms and continues to grow its portfolio of government and defense contracts.",source_name:"CesiumAstro",source_url:"https://www.cesiumastro.com",date:"2026-04-23",edition_date:"2026-04-23"}
+  {headline:"CesiumAstro Selected to Support GMD Weapon System Communications for Missile Defense Agency",category:"Startup Companies",summary:"CesiumAstro has been selected to support the Ground-based Midcourse Defense Weapon System In-flight Interceptor Communications System for the Missile Defense Agency, marking a significant contract win for the Austin-based space communications startup. The award expands CesiumAstro's footprint in high-stakes defense and missile defense applications, where reliable in-flight communications are mission critical. CesiumAstro specializes in active phased array communication systems for space and defense platforms and continues to grow its portfolio of government and defense contracts.",source_name:"CesiumAstro",source_url:"https://www.cesiumastro.com",date:"2026-04-23",edition_date:"2026-04-23"},
+  {headline:"Rohde & Schwarz Hosting Free Power Electronics & EMI Seminar in Austin — May 12",category:"Events",summary:"Rohde & Schwarz is hosting a free in-person seminar in Austin, Texas on May 12 covering power electronics and EMI — from design validation to compliance. The event is ideal for engineers working on power supply design, conducted and radiated emissions testing, and regulatory compliance. Space is limited and registration is free — a must-attend for anyone in the Austin power electronics community.",source_name:"Rohde & Schwarz",source_url:"https://events.rohde-schwarz.com/WEADIRS_Austin_051226",date:"2026-04-26",edition_date:"2026-04-23"}
 ];
 
 // ── STOCKS — LIVE ────────────────────────────────
@@ -742,22 +743,22 @@ function liShare(e, headline, url) {
 // ── ARTICLES GRID ─────────────────────────────────
 (function() {
   const remaining = articles.slice(4);
-  // We have 6 articles — lay them out as 3 cols x 2 rows
-  // Col 1: Stock (Navitas, Renesas) | Col 2: Stock (TI), Investments (Portal) | Col 3: Investments (Market), Startup (Cesium)
   const grid = document.getElementById('articles-grid');
   grid.style.display = 'grid';
   grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
 
-  // Manually assign to 3 columns keeping categories together as much as possible
-  const col1 = [remaining[0], remaining[1]]; // Navitas stock, Renesas stock
-  const col2 = [remaining[2], remaining[3]]; // TI stock, Portal funding
-  const col3 = [remaining[4], remaining[5]]; // Market funding, CesiumAstro
+  // Col 1: Navitas stock, Renesas stock
+  // Col 2: TI stock, Portal funding
+  // Col 3: Market funding, CesiumAstro
+  // Events gets its own full-width row below
+  const col1 = [remaining[0], remaining[1]];
+  const col2 = [remaining[2], remaining[3]];
+  const col3 = [remaining[4], remaining[5]];
 
   [col1, col2, col3].forEach((colArticles, c) => {
     const col = document.createElement('div');
     col.className = 'article-col';
     col.style.animationDelay = `${0.2 + c * 0.15}s`;
-
     colArticles.forEach(a => {
       if (!a) return;
       const idx = articles.indexOf(a);
@@ -774,9 +775,43 @@ function liShare(e, headline, url) {
         </div>`;
       col.appendChild(card);
     });
-
     grid.appendChild(col);
   });
+
+  // Events article — full width banner row below grid
+  const eventArticles = remaining.filter(a => a && a.category === 'Events');
+  if (eventArticles.length > 0) {
+    const eventSection = document.getElementById('articles-grid').parentElement;
+    const eventBanner = document.createElement('div');
+    eventBanner.style.cssText = `margin-top:24px;border-top:2px solid var(--rule);border-bottom:2px solid var(--rule);padding:0;`;
+
+    const sectionRule = document.createElement('div');
+    sectionRule.className = 'section-rule';
+    sectionRule.innerHTML = `<div class="section-rule-line"></div><div class="section-rule-title">Upcoming Events</div><div class="section-rule-line right"></div>`;
+    eventSection.appendChild(sectionRule);
+
+    const eventsGrid = document.createElement('div');
+    eventsGrid.style.cssText = `display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--paper-dark);`;
+
+    eventArticles.forEach(a => {
+      const idx = articles.indexOf(a);
+      const card = document.createElement('div');
+      card.className = 'article-card';
+      card.style.cssText = `background:var(--paper-mid);padding:20px;border-right:none;`;
+      card.onclick = () => openModal(idx);
+      card.innerHTML = `
+        <div class="article-category">${a.category}</div>
+        <div class="article-headline">${a.headline}</div>
+        <p class="article-summary">${a.summary}</p>
+        <div class="article-meta">
+          <span>${fmtDate(a.date)} · ${a.source_name}</span>
+          <a href="${a.source_url}" target="_blank" rel="noopener" class="read-more tooltip-wrap">Register Free →<span class="url-tooltip">${a.source_url}</span></a>
+        </div>`;
+      eventsGrid.appendChild(card);
+    });
+
+    eventSection.appendChild(eventsGrid);
+  }
 })();
 
 // ── EDITION DATE ──────────────────────────────────
