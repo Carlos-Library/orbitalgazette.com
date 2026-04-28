@@ -157,47 +157,6 @@
     to   { transform: translateX(-50%); }
   }
 
-  /* STOCK BAR */
-  .stock-bar {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 10px 30px;
-    border-bottom: 2px solid var(--rule);
-    background: var(--paper-mid);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .stock-bar::-webkit-scrollbar { display: none; }
-
-  .stock-bar-label {
-    font-family: 'IM Fell English', serif;
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent);
-    padding-right: 14px;
-    border-right: 1px solid var(--paper-dark);
-    margin-right: 8px;
-    white-space: nowrap;
-  }
-
-  .stock-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 12px;
-    border: 1px solid var(--paper-dark);
-    background: var(--paper);
-    white-space: nowrap;
-  }
-
-  .stock-ticker { font-family: 'IM Fell English', serif; font-size: 10px; letter-spacing: 0.1em; font-weight: bold; color: var(--ink); }
-  .stock-price  { font-family: 'Libre Baskerville', serif; font-size: 11px; color: #3a2e1e; }
-  .stock-change { font-family: 'IM Fell English', serif; font-size: 10px; font-weight: bold; }
-  .stock-up   { color: #2d6a2d; }
-  .stock-down { color: #8b1a1a; }
-
   /* MAIN CONTENT */
   .main-content { padding: 0 30px 40px; }
 
@@ -577,11 +536,6 @@
     <div class="ticker-inner" id="ticker-content"></div>
   </div>
 
-  <!-- STOCK BAR -->
-  <div class="stock-bar" id="stock-bar">
-    <div class="stock-bar-label">Markets</div>
-  </div>
-
   <!-- MAIN CONTENT -->
   <main class="main-content">
 
@@ -633,63 +587,9 @@ const articles = [
   {headline:"Space Power Electronics Market on Track to Hit $1.8B by 2035 at 17% CAGR",category:"Investments & Funding",summary:"A new SNS Insider report values the space power electronics market at $372 million in 2025 and projects it will reach $1.8 billion by 2035, growing at a 17.1% compound annual growth rate. Semiconductors accounted for the largest component share at 40.25% in 2025, with North America leading at 36.5% of global revenue. Rising demand for radiation-hardened power management in satellites and deep-space missions is cited as the primary growth driver.",source_name:"Globe Newswire",source_url:"https://www.globenewswire.com/news-release/2026/03/16/3255982/0/en/space-power-electronics-market-size-to-surpass-1804-16-million-by-2035-research-by-sns-insider.html",date:"2026-03-16",edition_date:"2026-04-23"},
   {headline:"Texas Instruments Surges 19% — Best Day Since 2000 as AI and Industrial Demand Roars Back",category:"Stock Price Movement",summary:"Texas Instruments stock soared 19% today to a record all-time high after reporting Q1 2026 revenue of $4.83 billion, beating estimates by $300 million, with data center revenue up 90% year-over-year. The company guided Q2 revenue to $5.0–$5.4 billion, well above the $4.87 billion Wall Street expected, signaling the long semiconductor downcycle is firmly over. TI is now up 63% for the year, with 15 analyst upgrades issued following the print.",source_name:"CNBC",source_url:"https://www.cnbc.com/2026/04/23/texas-instruments-stock-soars-on-q1-earnings-as-ai-demand-jumps.html",date:"2026-04-23",edition_date:"2026-04-23"},
   {headline:"CesiumAstro Selected to Support GMD Weapon System Communications for Missile Defense Agency",category:"Startup Companies",summary:"CesiumAstro has been selected to support the Ground-based Midcourse Defense Weapon System In-flight Interceptor Communications System for the Missile Defense Agency, marking a significant contract win for the Austin-based space communications startup. The award expands CesiumAstro's footprint in high-stakes defense and missile defense applications, where reliable in-flight communications are mission critical. CesiumAstro specializes in active phased array communication systems for space and defense platforms and continues to grow its portfolio of government and defense contracts.",source_name:"CesiumAstro",source_url:"https://www.cesiumastro.com",date:"2026-04-23",edition_date:"2026-04-23"},
-  {headline:"Rohde & Schwarz Hosting Free Power Electronics & EMI Seminar in Austin — May 12",category:"Events",summary:"Rohde & Schwarz is hosting a free in-person seminar in Austin, Texas on May 12 covering power electronics and EMI — from design validation to compliance. The event is ideal for engineers working on power supply design, conducted and radiated emissions testing, and regulatory compliance. Space is limited and registration is free — a must-attend for anyone in the Austin power electronics community.",source_name:"Rohde & Schwarz",source_url:"https://events.rohde-schwarz.com/WEADIRS_Austin_051226",date:"2026-04-26",edition_date:"2026-04-23"}
+  {headline:"Rohde & Schwarz Hosting Free Power Electronics & EMI Seminar in Austin — May 12",category:"Events",summary:"Rohde & Schwarz is hosting a free in-person seminar in Austin, Texas on May 12 covering power electronics and EMI — from design validation to compliance. The event is ideal for engineers working on power supply design, conducted and radiated emissions testing, and regulatory compliance. Space is limited and registration is free — a must-attend for anyone in the Austin power electronics community.",source_name:"Rohde & Schwarz",source_url:"https://events.rohde-schwarz.com/WEADIRS_Austin_051226",date:"2026-04-26",edition_date:"2026-04-23"},
+  {headline:"Rohde & Schwarz Power Electronics Online Conference — From Design to Validation, May 5 & 6",category:"Events",summary:"Rohde & Schwarz is hosting a free two-day online conference on May 5 and 6 covering the latest advances in power electronics design, measurement, and validation. Sessions cover wide bandgap devices including GaN and SiC, EMI debugging and filter design, automated power device testing, double-pulse measurements, and 80 PLUS certification. Keynote speakers include Tobias Keller from Hitachi Energy on May 5 and Veit Hellwig from Infineon Technologies on May 6. Registration is free and open to all engineers.",source_name:"Rohde & Schwarz",source_url:"https://www.rohde-schwarz.com/us/solutions/events/power-electronics-online-conference-2026-from-design-to-validation-virtual-event_258584.html",date:"2026-04-27",edition_date:"2026-04-23"}
 ];
-
-// ── STOCKS — LIVE ────────────────────────────────
-const TICKERS = ['TXN', 'IFNNY', 'RNECY', 'NVTS', 'STM'];
-
-const staticStocks = [
-  {ticker:'TXN',   price:'$279.84', change:'+19.0%', up:true},
-  {ticker:'IFNNY', price:'$57.38',  change:'+5.79%', up:true},
-  {ticker:'RNECY', price:'$9.02',   change:'+4.76%', up:true},
-  {ticker:'NVTS',  price:'$15.82',  change:'+19.8%', up:true},
-  {ticker:'STM',   price:'$21.14',  change:'-1.20%', up:false},
-];
-
-function renderStockBar(data) {
-  const bar = document.getElementById('stock-bar');
-  bar.querySelectorAll('.stock-item').forEach(el => el.remove());
-  data.forEach(s => {
-    const el = document.createElement('div');
-    el.className = 'stock-item';
-    el.innerHTML = `<span class="stock-ticker">${s.ticker}</span><span class="stock-price">${s.price}</span><span class="stock-change ${s.up ? 'stock-up' : 'stock-down'}">${s.change}</span>`;
-    bar.appendChild(el);
-  });
-}
-
-// Show static prices immediately
-renderStockBar(staticStocks);
-
-// Then try to fetch live prices
-async function fetchLiveStocks() {
-  try {
-    const symbols = TICKERS.join(',');
-    const url = `https://query1.finance.yahoo.com/v8/finance/quote?symbols=${symbols}`;
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    const res = await fetch(proxy);
-    if (!res.ok) throw new Error('fetch failed');
-    const json = await res.json();
-    const parsed = JSON.parse(json.contents);
-    const quotes = parsed?.quoteResponse?.result || [];
-    if (quotes.length === 0) throw new Error('no data');
-    const data = quotes.map(q => {
-      const change = q.regularMarketChangePercent || 0;
-      const price = q.regularMarketPrice || 0;
-      return {
-        ticker: q.symbol,
-        price: `$${price.toFixed(2)}`,
-        change: `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`,
-        up: change >= 0
-      };
-    });
-    renderStockBar(data);
-  } catch(e) {
-    // Static prices already showing — do nothing
-  }
-}
-
-fetchLiveStocks();
 
 // ── LINKEDIN SVG ──────────────────────────────────
 const LI_SVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`;
@@ -799,19 +699,20 @@ function liShare(e, headline, url) {
     eventSection.appendChild(sectionRule);
 
     const eventsGrid = document.createElement('div');
-    eventsGrid.style.cssText = `display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--paper-dark);`;
+    const numEventCols = Math.min(eventArticles.length, 3);
+    eventsGrid.style.cssText = `display:grid;grid-template-columns:repeat(${numEventCols},1fr);gap:20px;padding:0;grid-auto-rows:1fr;`;
 
     eventArticles.forEach(a => {
       const idx = articles.indexOf(a);
       const card = document.createElement('div');
       card.className = 'article-card';
-      card.style.cssText = `background:var(--paper-mid);padding:20px;border-right:none;`;
+      card.style.cssText = `background:var(--paper-mid);padding:20px;border:1px solid var(--paper-dark);display:flex;flex-direction:column;height:100%;`;
       card.onclick = () => openModal(idx);
       card.innerHTML = `
         <div class="article-category">${a.category}</div>
         <div class="article-headline">${a.headline}</div>
-        <p class="article-summary">${a.summary}</p>
-        <div class="article-meta">
+        <p class="article-summary" style="flex:1;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;">${a.summary}</p>
+        <div class="article-meta" style="margin-top:auto;padding-top:10px;">
           <span>${fmtDate(a.date)} · ${a.source_name}</span>
           <a href="${a.source_url}" target="_blank" rel="noopener" class="read-more tooltip-wrap">Register Free →<span class="url-tooltip">${a.source_url}</span></a>
         </div>`;
