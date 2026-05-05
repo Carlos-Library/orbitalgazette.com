@@ -823,7 +823,7 @@ function liShare(e, headline, url) {
   });
 
   // Events article — full width banner row below grid
-  const eventArticles = remaining.filter(a => a && a.category === 'Events');
+  const eventArticles = articles.filter(a => a && a.category === 'Events');
   if (eventArticles.length > 0) {
     const eventSection = document.getElementById('articles-grid').parentElement;
     const eventBanner = document.createElement('div');
